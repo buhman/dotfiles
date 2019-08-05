@@ -50,7 +50,7 @@ myModMask       = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
+myWorkspaces    = ["1","2","3","4","5","6","7","8","9","0"]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -165,9 +165,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_Home ), spawn "xrandr --output eDP-1 --off; xrandr --output DP-3 --auto --mode 3440x1440; setxkbmap -option ctrl:nocaps,compose:ralt")
     , ((modm .|. shiftMask, xK_End ), spawn "xrandr --output DP-3 --off; xrandr --output eDP-1 --auto --mode 3840x2160; setxkbmap -option ctrl:nocaps,compose:ralt")
 
-    , ((modm .|. shiftMask, xK_Home ), spawn "xrandr --output eDP-1 --off; xrandr --output DP-3 --auto --mode 3440x1440; setxkbmap -option ctrl:nocaps,compose:ralt")
-    , ((modm .|. shiftMask, xK_End ), spawn "xrandr --output DP-3 --off; xrandr --output eDP-1 --auto --mode 3840x2160; setxkbmap -option ctrl:nocaps,compose:ralt")
-
     , ((modm              , xK_f ), spawn "xdotool click --delay 1 --repeat 2000000 3")
     , ((modm              , xK_g ), spawn "pkill xdotool")
     ]
@@ -187,16 +184,30 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modHyper,             xK_r     ), windows W.swapUp )
     , ((modHyper,             xK_s     ), windows W.swapDown )
 
-    , ((modMeh,               xK_t     ), withFocused $ windows . W.sink)
+    --, ((modMeh,               xK_t     ), withFocused $ windows . W.sink)
 
     --
     , ((modHyper,             xK_Return), spawn $ XMonad.terminal conf)
     , ((modHyper,             xK_Tab   ), spawn "emacsclient -c")
     , ((modHyper,             xK_p     ), spawn "dmenu_run -fn DejavuSansMono-11")
+    , ((modHyper,             xK_l     ), spawn "networkmanager_dmenu -fn DejavuSansMono-11")
+    , ((modHyper,             xK_BackSpace), spawn "pavucontrol")
 
     --
     , ((modHyper,             xK_c     ), kill)
 
+    --
+    , ((modMeh,               xK_End   ), spawn "xrandr --output eDP-1 --off; xrandr --output DP-3 --auto --mode 3440x1440")
+    , ((modMeh,               xK_Next  ), spawn "xrandr --output DP-3 --off; xrandr --output eDP-1 --auto --mode 3840x2160")
+
+    --
+    , ((modMeh,               xK_space ), sendMessage NextLayout)
+    , ((modHyper,             xK_space ), setLayout $ XMonad.layoutHook conf)
+
+    --
+    , ((0,                    xF86XK_AudioPlay), spawn "mpc toggle")
+    , ((0,                    xF86XK_AudioPrev), spawn "mpc prev")
+    , ((0,                    xF86XK_AudioNext), spawn "mpc next")
     ]
     ++
 
@@ -206,8 +217,14 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- mod-shift-[1..9], Move client to workspace N
     --
     [((m .|. modm, k), windows $ f i)
-        | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
+        | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+    ++
+
+    --
+    [((m, k), windows $ f i)
+        | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
+        , (f, m) <- [(W.greedyView, modMeh), (W.shift, modHyper)]]
     ++
 
     --
