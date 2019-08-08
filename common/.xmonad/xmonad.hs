@@ -9,7 +9,8 @@
 
 import XMonad
 import XMonad.Layout.NoBorders
-import XMonad.Layout.Fullscreen
+--import XMonad.Layout.Fullscreen
+import XMonad.Layout.ThreeColumns
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
@@ -195,6 +196,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     --
     , ((modHyper,             xK_c     ), kill)
+    -- XXX: kill all?
 
     --
     , ((modMeh,               xK_End   ), spawn "xrandr --output eDP-1 --off; xrandr --output DP-3 --auto --mode 3440x1440")
@@ -203,6 +205,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --
     , ((modMeh,               xK_space ), sendMessage NextLayout)
     , ((modHyper,             xK_space ), setLayout $ XMonad.layoutHook conf)
+
+
+    -- dpms
+    -- slock
 
     --
     , ((0,                    xF86XK_AudioPlay), spawn "mpc toggle")
@@ -266,10 +272,15 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = tiled ||| Mirror tiled ||| noBorders full
+-- ||| Mirror tiled ||| noBorders full
+
+myLayout = tiled ||| columns
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
+
+     --
+     columns = ThreeColMid nmaster delta ratio
 
      -- The default number of windows in the master pane
      nmaster = 1
@@ -279,8 +290,6 @@ myLayout = tiled ||| Mirror tiled ||| noBorders full
 
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100
-
-     full = fullscreenFull Full
 
 ------------------------------------------------------------------------
 -- Window rules:
@@ -300,6 +309,7 @@ myLayout = tiled ||| Mirror tiled ||| noBorders full
 myManageHook = composeAll
     [ className =? "MPlayer" --> doFloat
     , className =? "mpv" --> doFloat
+    , title =? "Steam Guard - Computer Authorization Required" --> doFloat
     , isFullscreen --> doFullFloat]
 
 ------------------------------------------------------------------------
@@ -311,7 +321,7 @@ myManageHook = composeAll
 -- return (All True) if the default handler is to be run afterwards. To
 -- combine event hooks use mappend or mconcat from Data.Monoid.
 --
-myEventHook = mempty
+myEventHook = handleEventHook def <+> fullscreenEventHook
 
 ------------------------------------------------------------------------
 -- Status bars and logging
