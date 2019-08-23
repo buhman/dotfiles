@@ -102,6 +102,18 @@
 (require 'slime-autoloads)
 (setq slime-contribs '(slime-fancy))
 
+(autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+
+(let ((hooks '(emacs-lisp-mode-hook
+               eval-expression-minibuffer-setup-hook
+               ielm-mode-hook
+               lisp-mode-hook
+               lisp-interaction-mode-hook
+               scheme-mode-hook)))
+  (dolist (hook hooks)
+    (add-hook hook 'enable-paredit-mode)
+    (add-hook hook 'rainbow-delimiters-mode)))
+
 ;; copy-paste
 
 (defun get-primary ()
@@ -152,16 +164,6 @@
 
 ;; scheme: run
 
-(require 'gambit)
-(add-hook 'inferior-scheme-mode-hook 'gambit-inferior-mode)
-
-(defvar gerbil-program-name
-  (expand-file-name "~/gerbil-0.15.1/bin/gxi")) ; Set this for your GERBIL_HOME
-(setq scheme-program-name (concat gerbil-program-name " --lang r7rs"))
-
-(setq scheme-program-name "csi -I /home/buhman/route-mux")
-;;(add-to-list 'interpreter-mode-alist '("chicken-scheme" . scheme-mode))
-
 (with-eval-after-load 'scheme
   (define-key scheme-mode-map (kbd "C-c C-z") 'run-scheme))
 
@@ -197,18 +199,12 @@
 
 ;; scheme: modes
 
-(remove-hook 'scheme-mode-hook #'geiser-mode--maybe-activate)
-(add-hook 'scheme-mode-hook #'rainbow-delimiters-mode)
-(add-hook 'scheme-mode-hook #'parinfer-mode)
 
-(setq geiser-active-implementations '(chicken))
 
 ;; lisp
 
 (global-prettify-symbols-mode 1)
 
-(add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
-(add-hook 'lisp-mode-hook #'parinfer-mode)
 (add-hook 'lisp-mode-hook
           (lambda ()
             (set (make-local-variable 'lisp-indent-function))
@@ -227,22 +223,9 @@
 (modify-syntax-entry ?\[ "(]" lisp-mode-syntax-table)
 (modify-syntax-entry ?\] ")[" lisp-mode-syntax-table)
 
-;; elisp
+;; erlang
 
-(add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
-(add-hook 'emacs-lisp-mode-hook #'parinfer-mode)
-
-;; wml
-
-(add-to-list 'load-path "/home/buhman/.emacs.d/wesnoth-mode")
-(autoload 'wesnoth-mode "wesnoth-mode" "Major mode for editing WML." t)
-;;(add-to-list 'auto-mode-alist '("\\.cfg\\'" . wesnoth-mode))
-
-;; gerbil
-
-(autoload 'gerbil-mode "gerbil" "Gerbil editing mode." t)
-(require 'gambit)
-(add-hook 'inferior-scheme-mode-hook 'gambit-inferior-mode)
+(setq erlang-electric-commands '(erlang-electric-comma erlang-electric-semicolon erlang-electric-newline))
 
 ;; c
 
@@ -255,29 +238,11 @@
             (setq-local comment-style 'multi-line)
             (setq-local comment-style 'extra-line)))
 
-;; variables
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (glsl-mode kconfig-mode elixir-mode cython-mode nginx-mode bnf-mode paredit parinfer clojure-mode rainbow-delimiters fennel-mode moonscript lua-mode ninja-mode htmlize rust-mode pkgbuild-mode nix-mode meson-mode elm-mode guru-mode dockerfile-mode graphviz-dot-mode json-mode yaml-mode org-plus-contrib magit zenburn-theme haskell-mode use-package)))
- '(safe-local-variable-values
-   (quote
-    ((eval modify-syntax-entry 43 "'")
-     (eval modify-syntax-entry 36 "'")
-     (eval modify-syntax-entry 126 "'")))))
-
 ;; font
 
 (set-face-attribute 'default nil :font "Dejavu Sans Mono-10")
 (setq default-frame-alist '((font . "Dejavu Sans Mono-10")))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
+;; magit
+
+(global-set-key (kbd ("C-x g")) 'magit-status)
