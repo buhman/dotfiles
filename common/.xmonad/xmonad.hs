@@ -209,6 +209,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- dpms
     -- slock
+    , ((modHyper,             xK_z     ), spawn "slock & sleep 1; xset dpms force off")
+    , ((modHyper,             xK_x     ), spawn "sleep 1; xset dpms force off")
 
     --
     , ((0,                    xF86XK_AudioPlay), spawn "mpc toggle")
