@@ -7,21 +7,20 @@
 -- Normally, you'd only override those defaults you care about.
 --
 
-import XMonad
-import XMonad.Layout.NoBorders
---import XMonad.Layout.Fullscreen
-import XMonad.Layout.ThreeColumns
-import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.EwmhDesktops
+import           XMonad
+import           XMonad.Hooks.DynamicLog
+import           XMonad.Hooks.EwmhDesktops
+import           XMonad.Hooks.ManageHelpers
+import           XMonad.Layout.NoBorders
+import           XMonad.Layout.ThreeColumns
 
-import Data.Monoid
-import System.Exit
+import           Data.Monoid
+import           System.Exit
 
-import Graphics.X11.ExtraTypes.XF86
+import           Graphics.X11.ExtraTypes.XF86
 
-import qualified XMonad.StackSet as W
-import qualified Data.Map        as M
+import qualified Data.Map                     as M
+import qualified XMonad.StackSet              as W
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -182,20 +181,20 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --
     , ((modMeh,               xK_r     ), windows W.focusUp )
     , ((modMeh,               xK_s     ), windows W.focusDown )
-    , ((modHyper,             xK_r     ), windows W.swapUp )
-    , ((modHyper,             xK_s     ), windows W.swapDown )
+    , ((modMeh,               xK_w     ), windows W.swapUp )
+    , ((modMeh,               xK_f     ), windows W.swapDown )
 
-    --, ((modMeh,               xK_t     ), withFocused $ windows . W.sink)
-
-    --
-    , ((modHyper,             xK_Return), spawn $ XMonad.terminal conf)
-    , ((modHyper,             xK_Tab   ), spawn "emacsclient -c")
-    , ((modHyper,             xK_p     ), spawn "dmenu_run -fn DejavuSansMono-11")
-    , ((modHyper,             xK_l     ), spawn "networkmanager_dmenu -fn DejavuSansMono-11")
-    , ((modHyper,             xK_BackSpace), spawn "pavucontrol")
+    , ((modMeh,               xK_x     ), withFocused $ windows . W.sink)
 
     --
-    , ((modHyper,             xK_c     ), kill)
+    , ((modMeh,             xK_Return), spawn $ XMonad.terminal conf)
+    , ((modMeh,             xK_Tab   ), spawn "emacsclient -c")
+    , ((modMeh,             xK_p     ), spawn "dmenu_run -fn DejavuSansMono-11")
+    , ((modMeh,             xK_l     ), spawn "networkmanager_dmenu -fn DejavuSansMono-11")
+    --, ((modMeh,             xK_BackSpace), spawn "pavucontrol")
+
+    --
+    , ((modMeh,             xK_c     ), kill)
     -- XXX: kill all?
 
     --
@@ -204,13 +203,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     --
     , ((modMeh,               xK_space ), sendMessage NextLayout)
-    , ((modHyper,             xK_space ), setLayout $ XMonad.layoutHook conf)
+    , ((modMeh,               xK_BackSpace ), setLayout $ XMonad.layoutHook conf)
 
 
     -- dpms
     -- slock
-    , ((modHyper,             xK_z     ), spawn "slock & sleep 1; xset dpms force off")
-    , ((modHyper,             xK_x     ), spawn "sleep 1; xset dpms force off")
+    , ((modMeh,             xK_z     ), spawn "slock & sleep 1; xset dpms force off")
+    , ((modMeh,             xK_x     ), spawn "sleep 1; xset dpms force off")
 
     --
     , ((0,                    xF86XK_AudioPlay), spawn "mpc toggle")
