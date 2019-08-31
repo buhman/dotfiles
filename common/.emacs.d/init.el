@@ -238,6 +238,54 @@
             (setq-local comment-style 'multi-line)
             (setq-local comment-style 'extra-line)))
 
+;; haskell
+
+(defun buhman/haskell-mode-insert-language-extension ()
+  (interactive)
+  (insert "{-# LANGUAGE  #-}")
+  (forward-char -4)
+  t)
+
+(defun buhman/haskell-mode-insert-module ()
+  (interactive)
+  (let ((module-name (car (split-string (buffer-name) "\\."))))
+    (insert "module " module-name)
+    (haskell-indentation-newline-and-indent)
+    (insert "( ")
+    (haskell-indentation-newline-and-indent)
+    (delete-backward-char 2)
+    (insert ") where")
+    (haskell-indentation-newline-and-indent)))
+
+(require 'haskell-interactive-mode)
+(require 'haskell-process)
+
+(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+
+(setq haskell-stylish-on-save t)
+(setq haskell-process-show-debug-tips nil)
+(setq haskell-process-log t)
+
+(define-key interactive-haskell-mode-map (kbd "M-.") 'haskell-mode-goto-loc)
+(define-key interactive-haskell-mode-map (kbd "C-c C-t") 'haskell-mode-show-type-at)
+
+(define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
+(define-key haskell-mode-map (kbd "C-c i") 'haskell-interactive-bring)
+(define-key haskell-mode-map (kbd "C-c C-t") 'haskell-process-do-type)
+(define-key haskell-mode-map (kbd "C-c C-i") 'haskell-process-do-info)
+(define-key haskell-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
+(define-key haskell-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
+(define-key haskell-mode-map (kbd "C-c c") 'haskell-process-cabal)
+(define-key haskell-mode-map (kbd "C-x a a") 'align-entire)
+(define-key haskell-mode-map (kbd "C-x a r") 'align-regexp)
+(define-key haskell-mode-map (kbd "C-c t l") 'buhman/haskell-mode-insert-language-extension)
+(define-key haskell-mode-map (kbd "C-c t m") 'buhman/haskell-mode-insert-language-extension)
+
+(define-key haskell-cabal-mode-map (kbd "C-`") 'haskell-interactive-bring)
+(define-key haskell-cabal-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
+(define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
+(define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)
+
 ;; font
 
 (set-face-attribute 'default nil :font "Dejavu Sans Mono-10")
