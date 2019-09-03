@@ -279,7 +279,7 @@
 (define-key haskell-mode-map (kbd "C-x a a") 'align-entire)
 (define-key haskell-mode-map (kbd "C-x a r") 'align-regexp)
 (define-key haskell-mode-map (kbd "C-c t l") 'buhman/haskell-mode-insert-language-extension)
-(define-key haskell-mode-map (kbd "C-c t m") 'buhman/haskell-mode-insert-language-extension)
+(define-key haskell-mode-map (kbd "C-c t m") 'buhman/haskell-mode-insert-module)
 
 (define-key haskell-cabal-mode-map (kbd "C-`") 'haskell-interactive-bring)
 (define-key haskell-cabal-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
