@@ -266,8 +266,8 @@
 (setq haskell-process-show-debug-tips nil)
 (setq haskell-process-log t)
 
-(define-key interactive-haskell-mode-map (kbd "M-.") 'haskell-mode-goto-loc)
-(define-key interactive-haskell-mode-map (kbd "C-c C-t") 'haskell-mode-show-type-at)
+(define-key haskell-interactive-mode-map (kbd "M-.") 'haskell-mode-goto-loc)
+(define-key haskell-interactive-mode-map (kbd "C-c C-t") 'haskell-mode-show-type-at)
 
 (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
 (define-key haskell-mode-map (kbd "C-c i") 'haskell-interactive-bring)
