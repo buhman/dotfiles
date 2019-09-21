@@ -189,7 +189,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --
     , ((modMeh,             xK_Return), spawn $ XMonad.terminal conf)
     , ((modMeh,             xK_Tab   ), spawn "emacsclient -c")
-    , ((modMeh,             xK_p     ), spawn "dmenu_run -fn DejavuSansMono-11")
+    , ((modMeh,             xK_g    ), spawn "dmenu_run -fn DejavuSansMono-11")
     , ((modMeh,             xK_l     ), spawn "networkmanager_dmenu -fn DejavuSansMono-11")
     --, ((modMeh,             xK_BackSpace), spawn "pavucontrol")
 
@@ -231,7 +231,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --
     [((m, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
-        , (f, m) <- [(W.greedyView, modMeh), (W.shift, modHyper)]]
+        , (f, m) <-
+          [ (W.greedyView, modMeh              )
+          , (W.shift,      modMeh .|. shiftMask)]]
     ++
 
     --
@@ -246,21 +248,23 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
 --
-myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
-
+myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $ concat
+  [
     -- mod-button1, Set the window to floating mode and move by dragging
-    [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
-                                       >> windows W.shiftMaster))
+    [ ((m, button1), (\w -> focus w
+                       >> mouseMoveWindow w
+                       >> windows W.shiftMaster))
 
     -- mod-button2, Raise the window to the top of the stack
-    , ((modm, button2), (\w -> focus w >> windows W.shiftMaster))
+    , ((m, button2), (\w -> focus w
+                       >> windows W.shiftMaster))
 
     -- mod-button3, Set the window to floating mode and resize by dragging
-    , ((modm, button3), (\w -> focus w >> mouseResizeWindow w
-                                       >> windows W.shiftMaster))
+    , ((m, button3), (\w -> focus w
+                       >> mouseResizeWindow w
+                       >> windows W.shiftMaster))
 
-    -- you may also bind events to the mouse scroll wheel (button4 and button5)
-    ]
+    ] | m <- [modMeh, modm]]
 
 ------------------------------------------------------------------------
 -- Layouts:
