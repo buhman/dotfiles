@@ -1,26 +1,16 @@
---
--- xmonad example config file.
---
--- A template showing all available configuration hooks,
--- and how to override the defaults in your own xmonad.hs conf file.
---
--- Normally, you'd only override those defaults you care about.
---
+{-# OPTIONS_GHC -Wno-missing-signatures #-}
 
-import           XMonad
-import           XMonad.Hooks.DynamicLog
-import           XMonad.Hooks.EwmhDesktops
-import           XMonad.Hooks.ManageHelpers
-import           XMonad.Layout.NoBorders
-import           XMonad.Layout.ThreeColumns
-
-import           Data.Monoid
+import qualified Data.Map                     as Map
+import           Graphics.X11.ExtraTypes.XF86
 import           System.Exit
 
-import           Graphics.X11.ExtraTypes.XF86
-
-import qualified Data.Map                     as M
+import           XMonad
+import           XMonad.Hooks.EwmhDesktops    (ewmh, fullscreenEventHook)
+import           XMonad.Hooks.ManageHelpers   (doFullFloat, isFullscreen)
+import           XMonad.Layout.NoBorders      (smartBorders)
+import           XMonad.Layout.ThreeColumns   (ThreeCol (..))
 import qualified XMonad.StackSet              as W
+
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -63,7 +53,7 @@ modHyper = mod4Mask .|.  shiftMask .|. mod1Mask .|. controlMask
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
-myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
+myKeys conf@(XConfig {XMonad.modMask = modm}) = Map.fromList $
 
     -- launch a terminal
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
@@ -232,8 +222,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [((m, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
         , (f, m) <-
-          [ (W.greedyView, modMeh              )
-          , (W.shift,      modMeh .|. shiftMask)]]
+          [ (W.greedyView, modMeh   )
+          , (W.shift,      modHyper )]]
     ++
 
     --
@@ -248,7 +238,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
 --
-myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $ concat
+myMouseBindings (XConfig {XMonad.modMask = modm}) = Map.fromList $ concat
   [
     -- mod-button1, Set the window to floating mode and move by dragging
     [ ((m, button1), (\w -> focus w
@@ -360,8 +350,7 @@ myStartupHook = return ()
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
---main = xmonad defaults
-main = xmonad $ ewmh defaults
+main = launch $ ewmh defaults
             --{ layoutHook = smartBorders $ layoutHook defaultConfig
             -- other fields like terminal, modMask, etc.
             --}
@@ -372,7 +361,7 @@ main = xmonad $ ewmh defaults
 --
 -- No need to modify this.
 --
-defaults = defaultConfig {
+defaults = def {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,

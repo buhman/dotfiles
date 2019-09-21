@@ -1,0 +1,28 @@
+cabal-version:       >=1.10
+
+name:                buhman-xmonad
+version:             0.1.0.0
+-- synopsis:
+-- description:
+-- bug-reports:
+-- license:
+license-file:
+author:              Zack Buhman
+maintainer:          zack@buhman.org
+-- copyright:
+-- category:
+build-type:          Simple
+extra-source-files:
+
+executable buhman-xmonad
+  main-is: xmonad.hs
+  -- other-modules:
+  -- other-extensions:
+  build-depends:       X11 >= 1.9
+                     , base >=4.12 && <5
+                     , containers >= 0.6.0.1
+                     , xmonad == 0.15
+                     , xmonad-contrib == 0.15
+  -- hs-source-dirs:
+  default-language: Haskell2010
+  ghc-options: -Wall
