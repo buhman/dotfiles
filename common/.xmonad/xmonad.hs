@@ -350,7 +350,7 @@ myStartupHook = return ()
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
-main = launch $ ewmh defaults
+main = xmonad $ ewmh defaults
             --{ layoutHook = smartBorders $ layoutHook defaultConfig
             -- other fields like terminal, modMask, etc.
             --}
