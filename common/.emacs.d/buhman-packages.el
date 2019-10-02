@@ -22,6 +22,7 @@
 
 ;; modes
 
+(use-package tuareg)
 (use-package haskell-mode)
 (use-package yaml-mode)
 (use-package json-mode)
