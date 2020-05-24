@@ -1,5 +1,5 @@
 [options]
-font = DejaVu Sans Mono 11
+font = DejaVu Sans Mono 12
 clickable_url = false
 scrollback_lines = 10000
 cursor_blink = off

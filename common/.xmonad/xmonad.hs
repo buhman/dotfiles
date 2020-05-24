@@ -155,8 +155,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = Map.fromList $
     , ((modm .|. shiftMask, xK_Home ), spawn "xrandr --output eDP-1 --off; xrandr --output DP-3 --auto --mode 3440x1440; setxkbmap -option ctrl:nocaps,compose:ralt")
     , ((modm .|. shiftMask, xK_End ), spawn "xrandr --output DP-3 --off; xrandr --output eDP-1 --auto --mode 3840x2160; setxkbmap -option ctrl:nocaps,compose:ralt")
 
-    , ((modm              , xK_f ), spawn "xdotool click --delay 1 --repeat 2000000 3")
-    , ((modm              , xK_g ), spawn "pkill xdotool")
+    --, ((modm              , xK_f ), spawn "xdotool click --delay 1 --repeat 2000000 3")
+    --, ((modm              , xK_g ), spawn "pkill xdotool")
     ]
     ++
 

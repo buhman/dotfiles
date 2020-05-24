@@ -10,3 +10,7 @@
 
 (require 'buhman-lisp)
 (require 'buhman-haskell)
+(require 'buhman-c)
+(require 'buhman-sql)
+
+(require 'scad-mode)

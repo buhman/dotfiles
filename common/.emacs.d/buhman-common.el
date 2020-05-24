@@ -6,6 +6,13 @@
 (column-number-mode t)
 (blink-cursor-mode 0)
 
+(defun disable-scroll-bars (frame)
+  (modify-frame-parameters frame
+                           '((vertical-scroll-bars . nil)
+                             (horizontal-scroll-bars . nil))))
+
+(add-hook 'after-make-frame-functions 'disable-scroll-bars)
+
 ;; editing configuration
 
 (setq-default fill-column 80)
@@ -51,8 +58,8 @@
 
 ;; font
 
-(set-face-attribute 'default nil :font "Dejavu Sans Mono-10")
-(setq default-frame-alist '((font . "Dejavu Sans Mono-10")))
+(set-face-attribute 'default nil :font "Dejavu Sans Mono-12")
+(setq default-frame-alist '((font . "Dejavu Sans Mono-12")))
 
 
 (provide 'buhman-common)
