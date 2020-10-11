@@ -14,7 +14,7 @@
     (haskell-indentation-newline-and-indent)
     (insert "( ")
     (haskell-indentation-newline-and-indent)
-    (delete-backward-char 2)
+    (backward-char 2)
     (insert ") where")
     (haskell-indentation-newline-and-indent)))
 

@@ -14,7 +14,7 @@
 
 ;; elm
 
-(setq elm-format-on-save 't)
+(setq elm-format-on-save t)
 
 ;; comint
 
@@ -37,7 +37,7 @@
             (setq-local c-basic-offset 2)
             (setq-local c-default-style "gnu")
             (setq-local tab-width 2)
-            (setq-local indent-tabs-mode f)
+            (setq-local indent-tabs-mode nil)
             (setq-local comment-style 'multi-line)
             (setq-local comment-style 'extra-line)))
 

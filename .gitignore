@@ -7,3 +7,5 @@ dist-newstyle
 cabal.project.local*
 auto-save-list/
 elpa/
+transient/
+*.elc

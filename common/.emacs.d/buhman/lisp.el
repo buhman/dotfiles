@@ -1,5 +1,9 @@
 ;; scheme: run
 
+(require 'scheme)
+(require 'comint)
+(require 'cmuscheme)
+
 (defun scheme-send-buffer ()
   (interactive)
   (comint-send-region (scheme-proc) (point-min) (point-max)))
@@ -14,8 +18,11 @@
                                  "~/.emacs.d/scheme/init-gerbil.scm"
                                  "--lang" "r7rs"))
         (inferior-scheme-mode)))
-  (setq scheme-buffer "*scheme*")
   (pop-to-buffer-same-window "*scheme*"))
+
+(defun scheme-get-process ()
+  "Return the current Scheme process or nil if none is running."
+  (get-buffer-process "*scheme*"))
 
 (with-eval-after-load 'scheme
   (define-key scheme-mode-map (kbd "C-c C-z") 'run-scheme)
@@ -60,8 +67,8 @@
 
 (add-hook 'lisp-mode-hook
           (lambda ()
-            (set (make-local-variable 'lisp-indent-function))
-            'common-lisp-indent-function))
+            (set (make-local-variable 'lisp-indent-function)
+                 'common-lisp-indent-function)))
 
 (eval-after-load 'cl-indent
   `(progn
