@@ -1,22 +1,12 @@
 xrdb -load ~/.Xresources
 
 setxkbmap -option ctrl:nocaps,compose:ralt
-xsetroot -cursor_name left_ptr &
-
-# DRI_PRIME
-xrandr --setprovideroffloadsink 1 0
-
-# touchpad acceleration
-xinput set-prop 14 302 0.4
-
-touchegg &
+xsetroot -cursor_name left_ptr
 
 # https://github.com/flatpak/xdg-desktop-portal-gtk/issues/72
-dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY
-
-source ~/.ghcup/env
-eval $(opam env)
+dbus-update-activation-environment DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY
 
 emacs --daemon &
+pulseaudio --start &
 
 exec buhman-xmonad
