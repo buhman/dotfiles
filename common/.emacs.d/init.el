@@ -1,10 +1,4 @@
-(add-to-list 'load-path "~/.emacs.d/buhman")
-
-(require 'buhman-packages)
-
-(require 'buhman-common)
-(require 'buhman-misc)
-
-(require 'buhman-lisp)
-(require 'buhman-haskell)
-(require 'buhman-c)
+(setq dir (file-name-as-directory "~/.emacs.d/buhman"))
+(mapc
+ (lambda (fn) (load-file (concat dir fn)))
+ (sort (directory-files dir nil "\\.el$") 'string-lessp))

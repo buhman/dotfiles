@@ -5,3 +5,5 @@
 xmonad-x86_64-linux
 dist-newstyle
 cabal.project.local*
+auto-save-list/
+elpa/

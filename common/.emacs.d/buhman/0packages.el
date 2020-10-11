@@ -16,7 +16,6 @@
 ;; use packages
 
 (use-package zenburn-theme)
-(load-theme 'zenburn t)
 (use-package magit)
 (use-package org)
 (use-package htmlize)

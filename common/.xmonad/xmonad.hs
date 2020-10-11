@@ -15,7 +15,7 @@ import qualified XMonad.StackSet              as W
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "termite"
+myTerminal      = "alacritty"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse = True
@@ -122,7 +122,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = Map.fromList $
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
 
     -- Restart xmonad
-    , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
+    , ((modm              , xK_q     ), spawn "buhman-xmonad --recompile; buhman-xmonad --restart")
 
     -- Mute
     , ((0                 , xF86XK_AudioMute ), spawn "pactl set-sink-mute 0 toggle")
@@ -269,7 +269,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = Map.fromList $ concat
 --
 -- ||| Mirror tiled ||| noBorders full
 
-myLayout = tiled ||| columns
+myLayout = tiled ||| Mirror tiled ||| columns
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
