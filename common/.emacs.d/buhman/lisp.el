@@ -1,7 +1,25 @@
 ;; scheme: run
 
+(defun scheme-send-buffer ()
+  (interactive)
+  (comint-send-region (scheme-proc) (point-min) (point-max)))
+
+(defun run-scheme ()
+  (interactive)
+  (if (not (comint-check-proc "*scheme*"))
+      (progn
+        (setenv "GERBIL_HOME" (expand-file-name "~/gerbil"))
+        (set-buffer (make-comint "scheme"
+                                 "~/gerbil/bin/gxi"
+                                 "~/.emacs.d/scheme/init-gerbil.scm"
+                                 "--lang" "r7rs"))
+        (inferior-scheme-mode)))
+  (setq scheme-buffer "*scheme*")
+  (pop-to-buffer-same-window "*scheme*"))
+
 (with-eval-after-load 'scheme
-  (define-key scheme-mode-map (kbd "C-c C-z") 'run-scheme))
+  (define-key scheme-mode-map (kbd "C-c C-z") 'run-scheme)
+  (define-key scheme-mode-map (kbd "C-c C-b") 'scheme-send-buffer))
 
 ;; scheme: indents
 
@@ -61,7 +79,8 @@
                ielm-mode-hook
                lisp-mode-hook
                lisp-interaction-mode-hook
-               scheme-mode-hook)))
+               scheme-mode-hook
+               inferior-scheme-mode-hook)))
   (dolist (hook hooks)
     (add-hook hook 'enable-paredit-mode)
     (add-hook hook 'rainbow-delimiters-mode)))
@@ -74,6 +93,5 @@
          smart-yank
          smart-tab
          paredit))
-
 
 (provide 'buhman-lisp)

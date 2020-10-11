@@ -1,4 +1,3 @@
-(require 'hs-lint)
 (require 'haskell-interactive-mode)
 (require 'haskell-process)
 

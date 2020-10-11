@@ -16,6 +16,7 @@
 ;; use packages
 
 (use-package zenburn-theme)
+(load-theme 'zenburn t)
 (use-package magit)
 (use-package org)
 (use-package htmlize)
@@ -52,7 +53,7 @@
 (use-package slime)
 (use-package parinfer)
 (use-package paredit)
-(use-package geiser)
+;(use-package geiser)
 
 
 (provide 'buhman-packages)
