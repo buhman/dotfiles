@@ -1,3 +1,5 @@
+(setq custom-file "/dev/null")
+
 (setq dir (file-name-as-directory "~/.emacs.d/buhman"))
 (mapc
  (lambda (fn)
