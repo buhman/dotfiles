@@ -17,6 +17,7 @@
                                  "~/gerbil/bin/gxi"
                                  "~/.emacs.d/scheme/init-gerbil.scm"
                                  "--lang" "r7rs"))
+        (setq scheme-buffer "*scheme*")
         (inferior-scheme-mode)))
   (pop-to-buffer-same-window "*scheme*"))
 
