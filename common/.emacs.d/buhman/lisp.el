@@ -102,4 +102,14 @@
          smart-tab
          paredit))
 
+;; sbcl
+; (load "slime/swank-loader.lisp")
+; (load "quicklisp/setup.lisp")
+; (swank-loader:dump-image "sbcl.core-with-swank")
+
+(setq slime-lisp-implementations
+      `((sbcl ("sbcl" "--core" ,(substitute-in-file-name "$HOME/sbcl.core-with-swank"))
+              :init (lambda (port-file _)
+                      (format "(swank:start-server %S)\n" port-file)))))
+
 (provide 'buhman-lisp)
