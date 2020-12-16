@@ -88,7 +88,8 @@
                lisp-mode-hook
                lisp-interaction-mode-hook
                scheme-mode-hook
-               inferior-scheme-mode-hook)))
+               inferior-scheme-mode-hook
+               slime-mode-hook)))
   (dolist (hook hooks)
     (add-hook hook 'enable-paredit-mode)
     (add-hook hook 'rainbow-delimiters-mode)))
